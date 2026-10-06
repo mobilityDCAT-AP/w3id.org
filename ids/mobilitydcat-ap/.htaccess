@@ -27,10 +27,7 @@ RewriteRule ^drafts(/latest)?/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/latest/m
 
 # Versioned specification draft
 RewriteCond %{ENV:SYNTAX} ^(rdf|ttl|json|nt)$
-RewriteRule ^drafts/([0-9].[0-9].[0-9])/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/$1-draft-0.1/mobilitydcat-ap_v$1.%{ENV:SYNTAX} [R=303,L]
-
-RewriteCond %{ENV:SYNTAX} ^(rdf|ttl|json|nt)$
-RewriteRule ^drafts/([0-9].[0-9].[0-9])-([^/]+)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/$1-$2/mobilitydcat-ap_v$1.%{ENV:SYNTAX} [R=303,L]
+RewriteRule ^drafts/([0-9]+\.[0-9]+\.[0-9]+-draft\.[0-9]+(\.[0-9]+)?)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/$1/mobilitydcat-ap.%{ENV:SYNTAX} [R=303,L]
 
 # Latest specification draft documentation
 RewriteCond %{ENV:SYNTAX} ^html$
@@ -38,26 +35,39 @@ RewriteRule ^drafts(/latest)?/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/latest/i
 
 # Versioned specification draft documentation
 RewriteCond %{ENV:SYNTAX} ^html$
-RewriteRule ^drafts/([0-9].[0-9].[0-9])/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/$1-draft-0.1/index.html [R=303,L]
-
-RewriteCond %{ENV:SYNTAX} ^html$
-RewriteRule ^drafts/([0-9].[0-9].[0-9])-([^/]+)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/$1-$2/index.html [R=303,L]
+RewriteRule ^drafts/([0-9]+\.[0-9]+\.[0-9]+-draft\.[0-9]+(\.[0-9]+)?)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/drafts/$1/index.html [R=303,L]
 
 # Versioned specification releases
 RewriteCond %{ENV:SYNTAX} ^(rdf|ttl|json|nt)$
-RewriteRule ^(releases/)?([0-9].[0-9].[0-9])/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/$2/mobilitydcat-ap.%{ENV:SYNTAX} [R=303,L]
+RewriteRule ^(releases/)?([0-9]+\.[0-9]+\.[0-9]+)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/$2/mobilitydcat-ap.%{ENV:SYNTAX} [R=303,L]
 
 # Latest specification releases
 RewriteCond %{ENV:SYNTAX} ^(rdf|ttl|json|nt)$
-RewriteRule ^(releases)?(/latest)?/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/mobilitydcat-ap.%{ENV:SYNTAX} [R=303,L]
+RewriteRule ^releases(/latest)?/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/latest/mobilitydcat-ap.%{ENV:SYNTAX} [R=303,L]
 
 # Versioned specification documentation
 RewriteCond %{ENV:SYNTAX} ^html$
-RewriteRule ^(releases/)?([0-9].[0-9].[0-9])/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/$2/index.html [R=303,L]
+RewriteRule ^(releases/)?([0-9]+\.[0-9]+\.[0-9]+)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/$2/index.html [R=303,L]
 
 # Latest specification documentation
 RewriteCond %{ENV:SYNTAX} ^html$
-RewriteRule ^(releases)?(/latest)?/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/index.html [R=303,L]
+RewriteRule ^releases(/latest)?/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/latest/index.html [R=303,L]
+
+# Versioned SHACL resources (RDF serializations)
+RewriteCond %{ENV:SYNTAX} ^(rdf|ttl|nt)$
+RewriteRule ^releases/([0-9]+\.[0-9]+\.[0-9]+)/shacl/(shapes|ranges|range|recommended|mdr-vocabularies|deprecateduris)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/$1/shacl/$2.%{ENV:SYNTAX} [R=303,L]
+
+# Versioned SHACL resources (JSON-LD)
+RewriteCond %{ENV:SYNTAX} ^json$
+RewriteRule ^releases/([0-9]+\.[0-9]+\.[0-9]+)/shacl/(shapes|ranges|range|recommended|mdr-vocabularies|deprecateduris)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/$1/shacl/$2.jsonld [R=303,L]
+
+# Latest SHACL resources (RDF serializations)
+RewriteCond %{ENV:SYNTAX} ^(rdf|ttl|nt)$
+RewriteRule ^releases(/latest)?/shacl/(shapes|ranges|range|recommended|mdr-vocabularies|deprecateduris)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/latest/shacl/$2.%{ENV:SYNTAX} [R=303,L]
+
+# Latest SHACL resources (JSON-LD)
+RewriteCond %{ENV:SYNTAX} ^json$
+RewriteRule ^releases(/latest)?/shacl/(shapes|ranges|range|recommended|mdr-vocabularies|deprecateduris)/?$ %{ENV:ROOT_URL}/mobilityDCAT-AP/releases/latest/shacl/$2.jsonld [R=303,L]
 
 #####     Controlled Vocabularies     #####
 
@@ -89,3 +99,4 @@ RewriteRule ^.*$ https://github.com/mobilityDCAT-AP [R=303,L]
 
 # Default response
 RewriteRule ^.*$ https://github.com/mobilityDCAT-AP [R=303,L]
+
